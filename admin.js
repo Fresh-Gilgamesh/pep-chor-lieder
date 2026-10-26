@@ -18,30 +18,40 @@
     if (/row-level security|violates|Unauthorized|permission/i.test(m)) return 'Keine Berechtigung. Steht deine E-Mail-Adresse in der Admin-Liste?';
     if (/mime type|not supported/i.test(m)) return 'Dieses Dateiformat wird nicht akzeptiert. Erlaubt sind MP3 und M4A.';
     if (/maximum allowed size|too large|Payload too large/i.test(m)) return 'Die Datei ist zu gross (max. 50 MB).';
-    if (/Failed to fetch|NetworkError|Load failed/i.test(m)) return 'Keine Verbindung zum Server. Prüfe deine Internetverbindung.';
+    if (/Failed to fetch|NetworkError|Load failed/i.test(m)) return 'Keine Verbindung zu Supabase. Prüfe die SUPABASE_URL in config.js und ob das Supabase-Projekt aktiv ist (nicht pausiert).';
+    if (/Invalid API key|No API key|JWT/i.test(m)) return 'Der Schlüssel in config.js wird nicht akzeptiert. Kopiere den «anon public» Key nochmals vollständig.';
+    if (/is_admin|function .* does not exist|Could not find the function|relation .* does not exist|schema cache/i.test(m)) return 'Die Datenbank ist noch nicht eingerichtet. Führe supabase-setup.sql im SQL Editor aus.';
+    if (/antwortet nicht/i.test(m)) return 'Supabase antwortet nicht. Ist das Projekt pausiert? Dann in Supabase auf «Restore» klicken.';
     return 'Etwas ist schiefgelaufen' + (m ? ': ' + m : '.');
   }
 
   // ---------- Anmeldung ----------
   async function init() {
-    if (!P.configured) { msg('Die App ist noch nicht eingerichtet: Bitte in config.js die Supabase-Zugangsdaten eintragen.', 'err'); return; }
-    const { data } = await sb.auth.getSession();
-    if (data.session) await enter(data.session); else show('login');
+    if (P.problem) { msg(P.problem, 'err'); return; }
+    show('login');                                   // Formular sofort zeigen
+    try {
+      const { data } = await P.withTimeout(sb.auth.getSession(), 8000, 'Supabase antwortet nicht');
+      if (data && data.session) await enter(data.session);
+    } catch (e) { msg(errText(e), 'err'); show('login'); }
   }
   async function enter(session) {
-    const { data: ok, error } = await sb.rpc('is_admin');
-    if (error) { msg(errText(error), 'err'); show('noadmin'); return; }
-    if (!ok) { show('noadmin'); return; }
-    $('whoEmail').textContent = session.user.email;
-    show('admin'); msg('');
-    await reload();
+    try {
+      const { data: ok, error } = await P.withTimeout(sb.rpc('is_admin'), 10000, 'Supabase antwortet nicht');
+      if (error) throw error;
+      if (!ok) { show('noadmin'); return; }
+      $('whoEmail').textContent = session.user.email;
+      show('admin'); msg('');
+      await reload();
+    } catch (e) { msg(errText(e), 'err'); show('noadmin'); }
   }
   $('loginCard').addEventListener('submit', async e => {
     e.preventDefault();
     const email = $('email').value.trim(), password = $('password').value;
     if (!email || !password) { msg('Bitte E-Mail und Passwort eingeben.', 'err'); return; }
     $('loginBtn').disabled = true; msg('');
-    const { data, error } = await sb.auth.signInWithPassword({ email, password });
+    let data, error;
+    try { ({ data, error } = await P.withTimeout(sb.auth.signInWithPassword({ email, password }), 15000, 'Supabase antwortet nicht')); }
+    catch (err) { error = err; }
     $('loginBtn').disabled = false;
     if (error) { msg(errText(error), 'err'); return; }
     $('password').value = '';

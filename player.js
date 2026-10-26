@@ -9,12 +9,16 @@
   const msg = (text, kind) => P.showMsg($('msg'), text, kind);
 
   async function load() {
-    if (!P.configured) { msg('Die App ist noch nicht eingerichtet: Bitte in config.js die Supabase-Zugangsdaten eintragen.', 'err'); render(); return; }
+    if (P.problem) { msg(P.problem, 'err'); render(); return; }
     try {
-      tracks = (await P.loadSongs()).map(t => ({ ...t, url: P.publicUrl(t.file_path) }));
+      tracks = (await P.withTimeout(P.loadSongs(), 12000, 'timeout')).map(t => ({ ...t, url: P.publicUrl(t.file_path) }));
       msg('');
     } catch (e) {
-      msg('Die Lieder konnten nicht geladen werden. Prüfe deine Internetverbindung und lade die Seite neu.', 'err');
+      const m = (e && e.message) || '';
+      msg(/relation|schema cache|does not exist/i.test(m) ? 'Die Datenbank ist noch nicht eingerichtet. Führe supabase-setup.sql im Supabase SQL Editor aus.'
+        : /Invalid API key|No API key|JWT/i.test(m) ? 'Der Schlüssel in config.js wird nicht akzeptiert. Kopiere den «anon public» Key nochmals vollständig.'
+        : /timeout/.test(m) ? 'Supabase antwortet nicht. Ist das Projekt pausiert? Dann in Supabase auf «Restore» klicken.'
+        : 'Die Lieder konnten nicht geladen werden' + (m ? ' (' + m + ')' : '') + '. Prüfe deine Internetverbindung und lade die Seite neu.', 'err');
     }
     if (curId && !curTrack()) curId = null;
     render();
