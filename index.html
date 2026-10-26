@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Pep-Chor Lieder</title>
+<meta name="theme-color" content="#0F141A">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Pep-Chor">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <h1 data-app-name>Pep-Chor Lieder</h1>
+      <p id="summary">Lieder werden geladen …</p>
+    </div>
+  </header>
+
+  <div id="msg" class="notice" hidden></div>
+
+  <section aria-labelledby="listLabel">
+    <div class="list-head"><span id="listLabel">Playlist</span><span id="listCount"></span></div>
+    <ol class="tracks" id="tracks"></ol>
+  </section>
+
+  <p class="foot"><a href="admin.html">Admin-Bereich</a></p>
+</div>
+
+<div class="deck" role="region" aria-label="Player">
+  <div class="deck-in">
+    <div class="now">
+      <div class="now-title idle" id="nowTitle">Wähle ein Lied</div>
+      <div class="time"><span id="tCur">0:00</span> / <span id="tDur">0:00</span></div>
+    </div>
+    <div class="seek" id="seek" tabindex="0" role="slider" aria-label="Position im Lied" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <canvas id="wave"></canvas>
+      <div class="loading" id="loading">lädt …</div>
+    </div>
+    <div class="controls">
+      <button class="ctl toggle" id="shuffleBtn" type="button" aria-label="Zufallswiedergabe" aria-pressed="false">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
+      </button>
+      <button class="ctl" id="prevBtn" type="button" aria-label="Vorheriges Lied">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h2v14H6zM20 5v14L9 12z"/></svg>
+      </button>
+      <button class="ctl big" id="playBtn" type="button" aria-label="Abspielen">
+        <svg id="icPlay" width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        <svg id="icPause" width="26" height="26" viewBox="0 0 24 24" fill="currentColor" hidden><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+      </button>
+      <button class="ctl" id="nextBtn" type="button" aria-label="Nächstes Lied">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M16 5h2v14h-2zM4 5v14l11-7z"/></svg>
+      </button>
+      <button class="ctl toggle" id="repeatBtn" type="button" aria-label="Wiederholen: aus">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+        <span class="badge" id="repeatOne" hidden>1</span>
+      </button>
+    </div>
+  </div>
+</div>
+<audio id="audio" preload="metadata"></audio>
+
+<script src="config.js"></script>
+<script src="lib/supabase.js"></script>
+<script src="common.js"></script>
+<script src="player.js"></script>
+</body>
+</html>
