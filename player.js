@@ -173,7 +173,7 @@
       if (!('mediaSession' in navigator)) return;
       navigator.mediaSession.metadata = new MediaMetadata({
         title: t.title, artist: P.cfg.APP_NAME || 'Pep-Chor', album: P.cfg.APP_NAME || 'Pep-Chor',
-        artwork: [{ src: 'icons/icon-512.png', sizes: '512x512', type: 'image/png' }]
+        artwork: [{ src: 'icon-512.png', sizes: '512x512', type: 'image/png' }]
       });
       navigator.mediaSession.setActionHandler('play', () => audio.play());
       navigator.mediaSession.setActionHandler('pause', () => audio.pause());

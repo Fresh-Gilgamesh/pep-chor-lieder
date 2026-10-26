@@ -17,7 +17,7 @@
   } else if (/service_role|sb_secret_/.test(key) || /"role"\s*:\s*"service_role"/.test(safeJwt(key))) {
     problem = 'In config.js ist der geheime service_role-Schlüssel eingetragen. Ersetze ihn sofort durch den «anon public» Schlüssel!';
   } else if (!window.supabase || !window.supabase.createClient) {
-    problem = 'Die Datei lib/supabase.js wurde nicht gefunden. Prüfe auf GitHub, ob der Ordner «lib» mit seinen zwei Dateien hochgeladen ist.';
+    problem = 'Die Datei supabase.js wurde nicht gefunden. Prüfe auf GitHub, ob supabase.js und 591.supabase.js hochgeladen sind.';
   }
 
   let sb = null;

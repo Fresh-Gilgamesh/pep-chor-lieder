@@ -1,8 +1,8 @@
 // Service Worker: macht die App installierbar und lädt die App-Hülle auch bei schlechtem Empfang.
 // Musikdateien und Daten kommen immer frisch von Supabase.
-const CACHE = 'pep-chor-v2';
+const CACHE = 'pep-chor-v3';
 const SHELL = ['./', 'index.html', 'admin.html', 'app.css', 'common.js', 'player.js', 'admin.js',
-  'config.js', 'lib/supabase.js', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png'];
+  'config.js', 'supabase.js', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));
