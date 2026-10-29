@@ -117,3 +117,19 @@ ol.tracks{list-style:none;margin:0;padding:0;background:var(--surface);border:1p
   .icon-btn{width:32px;height:36px}
   .edit-tools{padding-right:2px}
 }
+
+/* Kaleidoskop-Hintergrund (nur Player-Seite) */
+#bg{position:fixed;inset:0;width:100vw;height:100vh;z-index:-2;display:block;background:#0F141A}
+.bg-scrim{display:none}
+.has-bg .bg-scrim{display:block;position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--bg) 70%,transparent) 0%,color-mix(in srgb,var(--bg) 35%,transparent) 45%,color-mix(in srgb,var(--bg) 60%,transparent) 100%)}
+.has-bg body{background:transparent}
+.has-bg .brand h1{text-shadow:0 1px 18px color-mix(in srgb,var(--bg) 85%,transparent)}
+.has-bg .brand p,.has-bg .list-head,.has-bg .foot,.has-bg .foot a{color:var(--ink)}
+.has-bg ol.tracks{background:color-mix(in srgb,var(--surface) 86%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+.has-bg .deck{background:color-mix(in srgb,var(--surface) 90%,transparent);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px)}
+.bg-toggle{width:42px;height:42px;display:grid;place-items:center;border-radius:999px;border:1px solid var(--line);
+  background:color-mix(in srgb,var(--surface) 80%,transparent);color:var(--muted);flex:none}
+.bg-toggle[aria-pressed="true"]{color:var(--accent-text);border-color:var(--accent)}
+header{align-items:flex-start}
+.has-bg .foot a{display:inline-block;padding:6px 12px;border-radius:999px;background:color-mix(in srgb,var(--surface) 82%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
