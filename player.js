@@ -110,7 +110,7 @@
     $('nowTitle').textContent = t ? t.title : (tracks.length ? 'Wähle ein Lied' : 'Keine Lieder vorhanden');
     $('nowTitle').classList.toggle('idle', !t);
     const playing = !!t && !audio.paused;
-    $('icPlay').hidden = playing; $('icPause').hidden = !playing;
+    $('icPlay').toggleAttribute('hidden', playing); $('icPause').toggleAttribute('hidden', !playing);
     $('playBtn').setAttribute('aria-label', playing ? 'Pause' : 'Abspielen');
     ['playBtn', 'nextBtn', 'prevBtn'].forEach(b => { $(b).disabled = !tracks.length; });
     updateTime(); drawWave();
