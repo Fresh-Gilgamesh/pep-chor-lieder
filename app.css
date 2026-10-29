@@ -133,3 +133,13 @@ ol.tracks{list-style:none;margin:0;padding:0;background:var(--surface);border:1p
 .bg-toggle[aria-pressed="true"]{color:var(--accent-text);border-color:var(--accent)}
 header{align-items:flex-start}
 .has-bg .foot a{display:inline-block;padding:6px 12px;border-radius:999px;background:color-mix(in srgb,var(--surface) 82%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+
+/* v7: auf dem Handy mehr vom Kaleidoskop zeigen */
+header{flex-wrap:nowrap}
+.brand{min-width:0}
+.has-bg .bg-scrim{background:linear-gradient(180deg,color-mix(in srgb,var(--bg) 55%,transparent) 0%,color-mix(in srgb,var(--bg) 18%,transparent) 40%,color-mix(in srgb,var(--bg) 30%,transparent) 100%)}
+.has-bg ol.tracks{background:color-mix(in srgb,var(--surface) 52%,transparent);-webkit-backdrop-filter:blur(5px) saturate(1.1);backdrop-filter:blur(5px) saturate(1.1);border-color:color-mix(in srgb,var(--line) 50%,transparent)}
+.has-bg .track{border-top-color:color-mix(in srgb,var(--line) 45%,transparent)}
+.has-bg .t-title,.has-bg .num,.has-bg .t-meta{text-shadow:0 0 6px var(--surface),0 0 2px var(--surface)}
+.has-bg .deck{background:color-mix(in srgb,var(--surface) 68%,transparent);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-top-color:transparent}
+.has-bg .now-title,.has-bg .time{text-shadow:0 0 6px var(--surface)}

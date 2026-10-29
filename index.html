@@ -16,11 +16,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap">
-<link rel="stylesheet" href="app.css">
+<link rel="stylesheet" href="app.css?v=7">
 </head>
 <body>
-<canvas id="bg" aria-hidden="true"></canvas>
-<div class="bg-scrim" aria-hidden="true"></div>
+<canvas id="bg" aria-hidden="true" style="position:fixed;inset:0;width:100vw;height:100vh;z-index:-2;display:block;pointer-events:none"></canvas>
+<div class="bg-scrim" aria-hidden="true" style="position:fixed;inset:0;z-index:-1;pointer-events:none"></div>
 <div class="wrap">
   <header>
     <div class="brand">
@@ -75,10 +75,10 @@
 </div>
 <audio id="audio" preload="metadata"></audio>
 
-<script src="config.js"></script>
-<script src="supabase.js"></script>
-<script src="common.js"></script>
-<script src="player.js"></script>
-<script src="bg.js"></script>
+<script src="config.js?v=7"></script>
+<script src="supabase.js?v=7"></script>
+<script src="common.js?v=7"></script>
+<script src="player.js?v=7"></script>
+<script src="bg.js?v=7"></script>
 </body>
 </html>
